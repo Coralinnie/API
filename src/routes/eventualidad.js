@@ -1,29 +1,45 @@
 const express = require('express');
 const router = express.Router();
-const eventualidad = require('../models/Eventualidad');
+const Eventualidad = require('../models/Eventualidad');
 
-router.get('/eventualidad', (req,res) => {
-    res.render('partials/eventualidad')
+
+
+router.get('/eventualidad', (req, res) => {
+    res.render('historias/eventualidad')
 })
 
-router.post('/partials/eventualidad', (req, res) => {
-    const {Nombres, Apellidos} = req.body;
-    const errors = []; 
+router.post('/historias/eventualidad',async (req, res) => {
+    const {Nombres, Apellidos, Eventualidad} = req.body; 
+    const errors = [];
     if(!Nombres){
-        errors.push({text: 'Por favor ingrese el nombre del paciente'})
+        errors.push({text: 'Ingrese por favor el Nombre'});
     }
     if(!Apellidos){
-        errors.push({text: 'Por favor los apellidos del paciente'})
+        errors.push({text: "Ingrese por favor Apellidos"});
     }
-    if(errors.length > 0 ){
-        res.render('partials/eventualidad', {
+    if(!Eventualidad){
+        errors.push({text:"Agregue una eventualidad"}); 
+    }
+
+    if(errors.length > 0){
+        res.render('historias/eventualidad', {
             errors,
             Nombres,
-            Apellidos
-        })
-    } else {
-        res.send('ok')
+            Apellidos,
+            Eventualidad
+        });
+    } else{
+        const newEventualidad = new Eventualidad({Nombres, Apellidos}); 
+        await newEventualidad.save(); 
+        res.redirect('/eventualidad'); 
     }
-}); 
+    
+
+});
+
+router.get('/eventualidad', (req, res) => {
+    res.send('Notes from database')
+})
+
 
 module.exports = router;
