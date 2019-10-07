@@ -1,13 +1,6 @@
 
-{{#each errors}}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-  {{text}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{{/each}}
-<form action="/historias/eventualidad" method="POST">
+
+<form action="/historias/eventualidad" method="post">
 
   <div class="form-row mt-5 mb-4">
     <div class="col-4">
@@ -23,7 +16,6 @@
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
 
-  <button class=" mt-5 btn btn-lg btn-primary btn-lg" type="submit">Guardar</button>
-
+  <input class=" mt-5 btn btn-lg btn-primary btn-lg" type="submit" value="Guardar">
 
 </form>

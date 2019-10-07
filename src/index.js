@@ -1,21 +1,24 @@
 const express = require('express');
-const app = express(); 
+const app = express();
 const cors = require('cors');
 const path = require('path');
-const morgan = require('morgan'); 
+const morgan = require('morgan');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const passport = require('passport');
+const flash = require('req-flash');
+const exphbs = require('express-handlebars');
+//const cookieParser = require('cookie-parser');
 
 //initilizations
-require('./database'); 
+require('./database');
+require('./config/passport');
 
 
 //configuraciones/settings
-app.set('port', process.env.PORT || 3000); 
-app.set('json spaces', 2);
+app.set('port', process.env.PORT || 3000);
 
 //hbs
-const exphbs = require('express-handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
 //rutas a nivel de proyecto
@@ -28,20 +31,35 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 //middlewares
+//app.use(cookieParser());
+//app.use(session({ secret: '123' }));
+
 app.use(morgan('dev'));
-app.use(express.urlencoded({extended: false})); 
-app.use(express.json()); 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cors());
 app.use(methodOverride('_method'));
 app.use(session({
-    secret: 'my secret site',
+    secret: 'mysecretapp',
     resave: true,
     saveUninitialized: true
-})); 
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+//Variables globales
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    res.locals.user = req.user || null;
+    next();
+})
 
 //routes
-app.use(require('./routes/index')); 
-app.use(require('./routes/eventualidad')); 
+app.use(require('./routes/index'));
+app.use(require('./routes/eventualidad'));
 app.use(require('./routes/users'));
 
 //Static files

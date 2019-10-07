@@ -12,15 +12,15 @@
   <form class="form-signin" action="/users/signup" method="post">
     <img class="mb-5 mt-5" src="https://i.ibb.co/3c82YSH/medical-2.png" alt="" width="250" height="95">
     <h1 class="h4 mb-3 font-weight-normal">Regístrese</h1>
+     <label for="inputEmail" class="sr-only">Name</label>
+    <input type="text" id="inputEmail" class="form-control col-4 container" placeholder="Nombre"  name="name" required="" value="{{name}}" autofocus="">
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control col-4 container" placeholder="Correo Electrónico"  name="email" required="" autofocus="">
+    <input type="email" id="inputEmail" class="form-control col-4 container mt-4" placeholder="Correo Electrónico"  name="email" value="{{email}}" required="" autofocus="">
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control col-4 container" placeholder="Contraseña" name="password" required="">
-    <div class="checkbox mb-3">
-    <label>
-        <input type="checkbox" value="remember-me"> Recordarme
-    </label>
-    </div>
+    <input type="password" id="inputPassword" class="form-control col-4 container mt-4" placeholder="Contraseña" name="password" value="{{password}}" required="">
+    <label for="inputPassword" class="sr-only">Confirm Password</label>
+    <input type="password" id="inputPassword" class="form-control col-4 container" placeholder="Confirmar contraseña" name="confirm_password" value="{{confirm_password}}" required="">
+    
     <input class=" mt-5 btn btn-lg btn-primary btn-lg" type="submit" value="Registrarme">
     <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
   </form>

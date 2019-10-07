@@ -1,14 +1,17 @@
 const express = require('express');
-const router = express.Router();
-const Eventualidad = require('../models/Eventualidad');
 
+const router = express.Router();
+
+const Eventualidad = require('../models/Eventualidad');
+var bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
 router.get('/eventualidad', (req, res) => {
     res.render('historias/eventualidad')
 })
 
-router.post('/historias/eventualidad',async (req, res) => {
+router.post('/historias/eventualidad', urlencodedParser, (req, res) => {
     const {Nombres, Apellidos, Eventualidad} = req.body; 
     const errors = [];
     if(!Nombres){
@@ -29,9 +32,11 @@ router.post('/historias/eventualidad',async (req, res) => {
             Eventualidad
         });
     } else{
-        const newEventualidad = new Eventualidad({Nombres, Apellidos}); 
-        await newEventualidad.save(); 
-        res.redirect('/eventualidad'); 
+        const newEventualidad = new Eventualidad({Nombres, Apellidos, Eventualidad}); 
+    //await newEventualidad.save(); 
+        console.log(newEventualidad); 
+       
+        res.send('ok');
     }
     
 
