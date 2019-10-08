@@ -2,6 +2,7 @@ const router = require('express').Router();
 var bodyParser = require('body-parser')
 const User = require('../models/users');
 const passport = require('passport');
+const {is} = require('../helpers/auth'); 
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -49,5 +50,11 @@ router.post('/users/signin', passport.authenticate('local', {
     failureRedirect: '/users/signin',
     failureFlash: true
 }));
+
+router.get('/users/logout', (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'Ha cerrado sesión.');
+    res.redirect('/users/signin');
+  });
 
 module.exports = router; 

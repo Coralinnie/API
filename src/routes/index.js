@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const router =  Router ();
+const {isAuthenticated} = require('../helpers/auth');
 
 
 
-router.get('/', async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
     res.render('index');
 });
 

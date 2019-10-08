@@ -8,4 +8,4 @@ const EvenSchema = new Schema ({
     date: {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model('Eventualidad', EvenSchema)
+module.exports = mongoose.model('evento', EvenSchema)
